@@ -57,16 +57,56 @@ if ("IntersectionObserver" in window) {
   revealItems.forEach((item) => item.classList.add("visible"));
 }
 
+// Seleção de vários serviços (lista só aparece ao clicar)
+const multi = document.querySelector("[data-multi]");
+const multiTrigger = multi?.querySelector(".multi-trigger");
+const multiPanel = multi?.querySelector(".multi-panel");
+const multiSummary = multi?.querySelector("[data-summary]");
+const servicesError = document.querySelector("#services-error");
+const checkedServices = () => [...document.querySelectorAll('input[name="services"]:checked')].map((i) => i.value);
+
+const setPanel = (open) => {
+  if (!multiTrigger || !multiPanel) return;
+  multiTrigger.setAttribute("aria-expanded", String(open));
+  multiPanel.hidden = !open;
+};
+multiTrigger?.addEventListener("click", () => setPanel(multiTrigger.getAttribute("aria-expanded") !== "true"));
+document.addEventListener("click", (e) => { if (multi && !multi.contains(e.target)) setPanel(false); });
+multi?.addEventListener("keydown", (e) => { if (e.key === "Escape") { setPanel(false); multiTrigger.focus(); } });
+multi?.addEventListener("change", () => {
+  const list = checkedServices();
+  multiSummary.textContent = list.length === 0 ? "Selecione os serviços" : list.length <= 2 ? list.join(", ") : `${list.length} serviços selecionados`;
+  multiTrigger.classList.toggle("has-value", list.length > 0);
+  if (list.length && servicesError) servicesError.hidden = true;
+});
+
 const bookingForm = document.querySelector("#booking-form");
 bookingForm?.addEventListener("submit", (event) => {
   event.preventDefault();
   const formData = new FormData(bookingForm);
   const name = String(formData.get("name") || "").trim();
-  const service = String(formData.get("service") || "").trim();
+  const services = checkedServices();
+  if (!name) { document.querySelector("#name")?.focus(); return; }
+  if (services.length === 0) { if (servicesError) servicesError.hidden = false; multiTrigger?.focus(); return; }
   const date = String(formData.get("date") || "").trim();
   const readableDate = date ? new Intl.DateTimeFormat("pt-BR", { timeZone: "UTC", dateStyle: "long" }).format(new Date(`${date}T12:00:00Z`)) : "a combinar";
-  const message = `Olá! Vim pelo site e gostaria de agendar um horário.\n\nNome: ${name}\nServiço: ${service}\nData preferida: ${readableDate}`;
+  const message = `Olá! Vim pelo site e gostaria de agendar um horário.\n\nNome: ${name}\nServiços: ${services.join(", ")}\nData preferida: ${readableDate}`;
   window.open(whatsappUrl(message), "_blank", "noopener");
+});
+
+// Carrosséis: passam sozinhos quando há mais de uma foto
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+document.querySelectorAll("[data-carousel]").forEach((carousel) => {
+  const slides = [...carousel.querySelectorAll(".carousel-slide")];
+  if (slides.length < 2 || reduceMotion) return;
+  let index = 0;
+  let timer = null;
+  const show = (i) => { slides[index].classList.remove("is-active"); index = i % slides.length; slides[index].classList.add("is-active"); };
+  const start = () => { if (!timer) timer = window.setInterval(() => show(index + 1), 4000); };
+  const stop = () => { window.clearInterval(timer); timer = null; };
+  new IntersectionObserver((entries) => entries.forEach((e) => (e.isIntersecting ? start() : stop())), { threshold: 0.3 }).observe(carousel);
+  carousel.addEventListener("pointerenter", stop);
+  carousel.addEventListener("pointerleave", start);
 });
 
 document.querySelectorAll('a[href="#agendamento"]').forEach((link) => {

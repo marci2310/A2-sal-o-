@@ -313,3 +313,61 @@ h2 { margin-bottom: 1.4rem; font-size: clamp(2.4rem, 8vw, 4.3rem); letter-spacin
 }
 
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+/* ---- Quem está à frente ---- */
+.owner-section { background: var(--paper-deep); }
+.owner-grid { display: grid; gap: 2.4rem; align-items: center; }
+.owner-photo { aspect-ratio: 4 / 5; max-width: 420px; overflow: hidden; }
+.owner-photo img { width: 100%; height: 100%; object-fit: cover; }
+.owner-copy h2 { margin-bottom: 1.8rem; }
+.owner-cards { display: grid; gap: 1rem; }
+.owner-card { padding: 1.3rem 1.4rem; background: var(--white); border-left: 2px solid var(--rose); }
+.owner-card h3 { margin: 0 0 .35rem; font-family: var(--display); font-size: 1.15rem; font-weight: 600; }
+.owner-card p { margin: 0; color: var(--muted); font-size: .92rem; }
+
+/* ---- Serviços com carrossel ---- */
+.svc-list { display: grid; gap: 3.6rem; }
+.svc-block { display: grid; gap: 1.6rem; align-items: center; }
+.carousel { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: var(--sand); }
+.carousel-slide { position: absolute; inset: 0; margin: 0; opacity: 0; transition: opacity .9s ease; }
+.carousel-slide.is-active { opacity: 1; }
+.carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
+.svc-copy h3 { margin: 0 0 .8rem; font-family: var(--display); font-size: clamp(1.6rem, 5vw, 2.2rem); font-weight: 600; line-height: 1.15; }
+.svc-copy > p:not(.eyebrow) { color: var(--muted); max-width: 460px; }
+.svc-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.2rem 0 1.6rem; padding: 0; list-style: none; }
+.svc-tags li { padding: .35rem .8rem; border: 1px solid var(--line); font-size: .78rem; }
+
+/* ---- Seleção de serviços no agendamento ---- */
+.multi { position: relative; }
+.multi-trigger { display: flex; justify-content: space-between; align-items: center; gap: .8rem; width: 100%; padding: .7rem 0; border: 0; border-bottom: 1px solid var(--line); background: transparent; color: var(--soft); text-align: left; font-size: .85rem; }
+.multi-trigger.has-value { color: var(--ink); }
+.multi-trigger svg { width: 16px; height: 16px; flex: none; transition: transform .2s ease; }
+.multi-trigger[aria-expanded="true"] svg { transform: rotate(180deg); }
+.multi-trigger:focus-visible { outline: 2px solid var(--rose); outline-offset: 2px; }
+.multi-panel { margin-top: .3rem; padding: .4rem 1rem 1rem; border: 1px solid var(--line); background: var(--white); max-height: 320px; overflow-y: auto; }
+.multi-panel[hidden] { display: none; }
+.multi-panel fieldset { margin: 0; padding: 0; border: 0; }
+.multi-panel legend { padding: .9rem 0 .2rem; color: var(--rose-deep); font-size: .7rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.booking-form label.check { display: flex; align-items: center; gap: .7rem; margin: 0; padding: .5rem 0; font-size: .88rem; font-weight: 400; letter-spacing: 0; text-transform: none; cursor: pointer; }
+.booking-form label.check input { width: 18px; height: 18px; flex: none; margin: 0; accent-color: var(--rose-deep); }
+.form-error { margin: .5rem 0 0; color: #a1372a; font-size: .82rem; }
+.form-error[hidden] { display: none; }
+
+/* ---- Ambiente e Instagram ---- */
+.ambient-grid { display: grid; gap: 2rem; align-items: center; margin-bottom: 4rem; }
+.ambient-photo { aspect-ratio: 4 / 3; overflow: hidden; }
+.ambient-photo img { width: 100%; height: 100%; object-fit: cover; }
+.ambient-copy p:not(.eyebrow) { max-width: 460px; opacity: .8; }
+.instagram-band { padding: 4rem 0; background: var(--ink); color: var(--white); }
+.ig-grid { display: grid; gap: 1.6rem; align-items: center; }
+.ig-grid h2 { margin-bottom: .6rem; }
+.ig-grid p { margin: 0; opacity: .75; }
+
+@media (min-width: 860px) {
+  .owner-grid { grid-template-columns: .8fr 1.2fr; gap: 4.5rem; }
+  .owner-cards { grid-template-columns: 1fr 1fr; }
+  .svc-block { grid-template-columns: 1.1fr .9fr; gap: 3.5rem; }
+  .svc-block:nth-child(even) .carousel { order: 2; }
+  .ambient-grid { grid-template-columns: 1.1fr .9fr; gap: 4rem; }
+  .ig-grid { grid-template-columns: 1fr auto; }
+}
