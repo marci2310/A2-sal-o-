@@ -30,14 +30,14 @@ Abra `http://localhost:3000`. Também funciona abrindo o `index.html` direto no 
 
 Cada serviço tem um carrossel que passa sozinho. Para trocar, substitua os arquivos em `assets/` mantendo o nome, ou edite o `src` das tags `<img>` dentro de `#servicos`:
 
-- `placeholder-barbearia-1.svg` a `-3.svg`: barbearia
+- `salao-1.webp` a `salao-3.webp` e `barbearia-1.webp`: fotos reais do salão e da barbearia (para mais fotos, copie um bloco `<figure class="carousel-slide">` e adicione o arquivo em `assets/`)
 - `placeholder-estetica.svg` e `placeholder-limpeza-de-pele.svg`: estética e limpeza de pele (hoje com 1 imagem genérica; para ter mais, copie um bloco `<figure class="carousel-slide">`)
 - `placeholder-dono.svg`: foto do proprietário
 - `placeholder-ambiente.svg`: foto do ambiente
 
 ## Pendências antes de entregar ao salão
 
-- Preencher o nome e a história do proprietário na seção `#experiencia` (hoje há textos entre colchetes).
+- Trocar a foto do Alberico (`assets/placeholder-dono.svg`) pela foto real.
 
 - Trocar as fotos de demonstração por fotos reais do salão (com autorização).
 - Confirmar qual WhatsApp usar para agendamento e o horário de domingo.
